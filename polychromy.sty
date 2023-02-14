@@ -1,0 +1,173 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{polychromy}[2023/01/21 Polychromy]
+
+\RequirePackage{tikz}
+\usetikzlibrary{fadings}
+\RequirePackage{xcolor}
+
+\DeclareOption*{\PackageWarning{Polychromy}{Opción ‘\CurrentOption’} no reconocida.}
+\ProcessOptions\relax
+
+%%%%	\NombreDegradado y \ActualizarDegradado	%%%%
+
+% Sus entradas son texto y permiten hacer identificar y actualizar nombre del degradado a aplicar
+
+\newcommand\NombreDegradado{PolychromyArcoiris}
+\newcommand{\ActualizarDegradado}[1]{\renewcommand\NombreDegradado{#1}}
+
+%%%%	Contador: ContadorDegradado	%%%%
+
+% Permite identificar cada degradado en los comandos de Degradado, para aplicar los degradados de manera individual
+
+\newcounter{ContadorDegradado}
+\setcounter{ContadorDegradado}{0}
+
+%%%%	\DegT	%%%%
+
+% Este comando aplica un degradado fijo respecto a la página en modo texto
+
+\newcommand{\DegT}[2][\NombreDegradado]{\vphantom{\begin{tikzfadingfrompicture}[name=Deg\theContadorDegradado]
+			\node[text=transparent!0, inner sep=0, outer sep=0]{#2};
+	\end{tikzfadingfrompicture}}\begin{tikzpicture}
+		\node[inner sep=0, outer sep=0] (nodo\theContadorDegradado) {\phantom{#2}};
+		\node[
+		scope fading=Deg\theContadorDegradado,
+		fit fading=false, inner sep=0, outer sep=0
+		] at (0,0) {
+			\begin{tikzpicture}[remember picture, overlay]
+				\node[
+				shading=#1,
+				shading angle=180, 
+				anchor=north, 
+				minimum width=\paperwidth, 
+				minimum height=\paperheight
+				] (box) at (current page.north){};
+			\end{tikzpicture}
+		};
+	\end{tikzpicture}\addtocounter{ContadorDegradado}{1}}
+
+
+%%%%	\DegM	%%%%
+
+% Es el comando que aplica degradado a entornos matemáticos.
+% Sin embargo, es recomendable utilizar los comandos que derivan de \DegM
+
+\usepackage{tcolorbox}
+\tcbuselibrary{hooks}
+\tcbuselibrary{skins}
+\tcbuselibrary{theorems}
+
+\newcommand{\DegM}[2][\NombreDegradado]{
+	\vphantom{
+		\begin{tikzfadingfrompicture}[name=Deg\theContadorDegradado]
+			\node[
+			text=transparent!0,
+			inner xsep=0pt,
+			inner ysep=0.4pt,
+			outer sep=0mm]{$#2$};
+		\end{tikzfadingfrompicture}
+	}
+	\raisebox{-0pt}{\tcboxmath[
+		enhanced jigsaw,
+		left*=0mm,
+		right*=0mm,
+		boxsep=0pt,
+		top=0.4pt,
+		bottom=0.4pt,
+		arc=0mm,
+		boxrule=0mm,
+		opacityfill=0.0,
+		watermark tikz={
+			\node[
+			inner xsep=0,
+			inner ysep=0pt,
+			outer sep=0
+			] (nodo\theContadorDegradado) {$\phantom{#2}$};
+			\node[
+			scope fading=Deg\theContadorDegradado,
+			fit fading=false,
+			inner xsep=0,
+			inner ysep=0,
+			outer sep=0
+			] at (0,0) {
+				\begin{tikzpicture}[remember picture, overlay]
+					\node[
+					shading=#1,
+					shading angle=180, 
+					anchor=north, 
+					minimum width=\paperwidth, 
+					minimum height=\paperheight
+					] (box) at (current page.north){};
+				\end{tikzpicture}
+			};
+		},
+		watermark zoom=1,
+		watermark opacity=1
+		]{\phantom{#2}}}\addtocounter{ContadorDegradado}{1}
+}
+
+%%%%	\DegA	%%%%
+
+% Este comando aplica un estilo automático en entornos matemáticos, por lo que es el más recomendable
+
+\newcommand{\DegA}[2][\NombreDegradado]{
+	\mathchoice
+	{\DegM[#1]{\textstyle #2}}
+	{\DegM[#1]{\displaystyle #2}}
+	{\DegM[#1]{\scriptstyle #2}}
+	{\DegM[#1]{\scriptscriptstyle #2}}
+}
+
+%%%%	\DegD, \DegS, \DegSS	%%%%
+
+% Estos comandos aplican \displaystyle, \scriptstyle y \scriptscriptstyle.
+% Se recomienda su uso para ajustes específicos en el estilo de entornos matemáticos
+
+\newcommand{\DegD}[2][\NombreDegradado]{\DegradadoM[#1]{\displaystyle #2}}
+\newcommand{\DegS}[2][\NombreDegradado]{\DegradadoM[#1]{\scriptstyle #2}}
+\newcommand{\DegSS}[2][\NombreDegradado]{\DegradadoM[#1]{\scriptscriptstyle #2}}
+
+%%%%	\DegD, \DegS, \DegSS	%%%%
+
+% Define colores para degradados
+\usetikzlibrary{shadings}
+
+\definecolor{PolychromyArcoiris1}{HTML}{ff0018}
+\definecolor{PolychromyArcoiris2}{HTML}{ff0417}
+\definecolor{PolychromyArcoiris3}{HTML}{ff310e}
+\definecolor{PolychromyArcoiris4}{HTML}{ff5d06}
+\definecolor{PolychromyArcoiris5}{HTML}{ff7a01}
+\definecolor{PolychromyArcoiris6}{HTML}{f78400}
+\definecolor{PolychromyArcoiris7}{HTML}{f7a800}
+\definecolor{PolychromyArcoiris8}{HTML}{ddb502}
+\definecolor{PolychromyArcoiris9}{HTML}{73c70e}
+\definecolor{PolychromyArcoiris10}{HTML}{01c92d}
+\definecolor{PolychromyArcoiris11}{HTML}{01be69}
+\definecolor{PolychromyArcoiris12}{HTML}{01b3aa}
+\definecolor{PolychromyArcoiris13}{HTML}{0ba1df}
+\definecolor{PolychromyArcoiris14}{HTML}{3f77e6}
+\definecolor{PolychromyArcoiris15}{HTML}{724cec}
+\definecolor{PolychromyArcoiris16}{HTML}{8a39ef}
+\definecolor{PolychromyArcoiris17}{HTML}{8a39ef}
+
+\pgfdeclareverticalshading{PolychromyArcoiris}{100bp}{
+	color(0bp)=(PolychromyArcoiris1);
+	color(25bp)=(PolychromyArcoiris1);
+	color(30bp)=(PolychromyArcoiris2);
+	color(33bp)=(PolychromyArcoiris3);
+	color(36bp)=(PolychromyArcoiris4);
+	color(39bp)=(PolychromyArcoiris5);
+	color(42bp)=(PolychromyArcoiris6);
+	color(45bp)=(PolychromyArcoiris7);
+	color(48bp)=(PolychromyArcoiris8);
+	color(51bp)=(PolychromyArcoiris9);
+	color(54bp)=(PolychromyArcoiris10);
+	color(57bp)=(PolychromyArcoiris11);
+	color(60bp)=(PolychromyArcoiris12);
+	color(63bp)=(PolychromyArcoiris13);
+	color(66bp)=(PolychromyArcoiris14);
+	color(69bp)=(PolychromyArcoiris15);
+	color(72bp)=(PolychromyArcoiris16);
+	color(75bp)=(PolychromyArcoiris17);
+	color(100bp)=(PolychromyArcoiris17)
+}
