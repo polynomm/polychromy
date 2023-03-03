@@ -65,19 +65,17 @@
 %Indentación (No se indentará texto alguno en este documento)
 \setlength{\parindent}{0cm}
 
-% Fuente Montserrat (Compilar con Xelatex o LuaLatex)
-\DeclareSymbolFont{operators}   {OT1}{cmr} {m}{n}
-\DeclareSymbolFont{letters}     {OML}{cmm} {m}{it}
-\DeclareSymbolFont{symbols}     {OMS}{cmsy}{m}{n}
+\RequirePackage[olddefault, varnothing]{fontsetup}
 \setmainfont[
 Ligatures=TeX,
-Numbers=Lining,
 UprightFont = * Regular,
 ItalicFont = * Italic,
 SmallCapsFont = * Medium,
 BoldFont = * Medium,
 BoldItalicFont = * Medium Italic
 ]{Raleway}
+\setmathsf{Raleway Regular}
+\setoperatorfont{\mathsf}
 %----- Nuevos estilos de letra.
 \newfontface{\RalewayLight}{Raleway Light}
 \newfontface{\RalewayRegular}{Raleway Regular}
