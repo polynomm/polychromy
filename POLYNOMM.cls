@@ -9,7 +9,7 @@
 %%%%	Paquetes	%%%%
 
 %
-\RequirePackage{Polychromy}
+\RequirePackage{polychromy}
 
 % Tipo de papel y ajuste de márgenes.
 \RequirePackage[letterpaper, top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
@@ -89,11 +89,14 @@ BoldItalicFont = * Medium Italic
 
 \definecolor{ColorTexto}{HTML}{222222}
 \color{ColorTexto}
-%Comandos para links de navegación. Enlace para páginas web, Archivo para un documento específico.
+
+%%%%	Links	%%%%
+
 \newcommand{\Enlace}[2]{\href{#2}{\Regular\textcolor{Color}{Enlace: #1}}\normalfont\\}
 \newcommand{\Archivo}[2]{\href{#2}{\textcolor{Color}{Archivo #1}}\\}
 \newcommand{\Oficial}[3]{\href{run:../2. Coleccion de Archivos/#1/#2.#3}{\textbf{\textcolor{Color}{\textit{Archivo oficial} #1 #2}}\\}}
 
+%%%%	Estilo de página	%%%%
 \fancypagestyle{nada}{
 	\fancyhead[L]{}
 	\fancyhead[C]{}
@@ -129,10 +132,10 @@ BoldItalicFont = * Medium Italic
 	\addtocounter{NumCapitulo}{1}
 }
 
-%Entorno para añadir problemas y soluciones. El argumento indica su origen y tiene uno por defecto.
+%%%%	Problemas	%%%%
 
 %NumProblema es el contador del total de problemas.
-%NumProblema es el contador del total de problemas.
+
 \newcounter{NumProblema}
 \setcounter{NumProblema}{0}
 
@@ -141,9 +144,13 @@ BoldItalicFont = * Medium Italic
 
 \newcommand{\Problema}[1][]{\addtocounter{NumProblema}{1}\vspace{1.5em}{{\setstretch{1.25}\fontsize{14}{17.5}\selectfont\QuicksandSemiBold\textcolor{black}{Problema}\hspace{0.5em}\DegT{\theNumProblema}\hspace{1em}#1}\\[0.25em]}}
 
+%%%%	Solución, demostración y nota	%%%%
+
 \newcommand{\Solucion}[1][]{\vspace{.5em}{{\setstretch{1.25}\fontsize{9}{11.25}\selectfont\QuicksandBold\textcolor{black}{SOLUCIÓN #1}}\\[0.25em]}}
 
 \newcommand{\Demostracion}[1][]{\vspace{.5em}{{\setstretch{1.25}\fontsize{9}{11.25}\selectfont\QuicksandBold\textcolor{black}{DEMOSTRACIÓN #1}}\\[0.25em]}}
+
+\newcommand{\Nota}[1][]{\vspace{.5em}{{\setstretch{1.25}\fontsize{9}{11.25}\selectfont\QuicksandBold\textcolor{black}{NOTA #1}}\\[0.25em]}}
 
 %%%%	Partes del título	%%%%
 \newcommand{\DetallePOLYNOMM}[1][\par\setstretch{1.25}\fontsize{12}{15}\(\DegM{a_nx^n+\cdots+a_0}\)]{#1}
@@ -158,6 +165,8 @@ BoldItalicFont = * Medium Italic
 
 \newcommand{\Subtema}[1]{{\thispagestyle{nada}\par\vspace{0.5cm}\setstretch{1.25}\fontsize{18}{22.5} \selectfont\QuicksandBold\textcolor{black}{#1}}\pagestyle{normal}}
 
+%%%%	Enunciados	%%%%
+
 \newcommand{\Enunciado}[2][Enunciado]{\addtocounter{NumEnunciado}{1}\hypertarget{Enunciado\theNumCapitulo.\theNumEnunciado}{}\vspace{1.5em}{{\setstretch{1.25}\fontsize{14}{17.5}\selectfont\QuicksandSemiBold\textcolor{black}{#1}\hspace{0.5em}\DegT{\theNumEnunciado}\hspace{1em}#2}\\[0.25em]}}
 
 \newcommand{\LinkEnunciado}[3][Enunciado]{\hyperlink{Enunciado#2.#3}{{\setstretch{1.25}\fontsize{12}{15}\selectfont\QuicksandSemiBold\textcolor{black}{#1}\hspace{0.5em}\DegT{#3}\hspace{1em}}}}
@@ -167,6 +176,6 @@ BoldItalicFont = * Medium Italic
 \newcommand{\Teorema}[1][]{\Enunciado[Teorema]{#1}}
 \newcommand{\Lema}[1][]{\Enunciado[Lema]{#1}}
 \newcommand{\Corolario}[1][]{\Enunciado[Corolario]{#1}}
-\newcommand{\Definicion}[1][]{\Enunciado[Definición]{#1}}
+\newcommand{\Definicion}[1][]{\Enunciado[\DegT{Definición}]{#1}}
 \newcommand{\Propiedad}[1][]{\Enunciado[Propiedad]{#1}}
 \newcommand{\Ejemplo}[1][]{\Enunciado[Ejemplo]{#1}}

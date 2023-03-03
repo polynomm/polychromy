@@ -15,23 +15,23 @@
 \newcommand\NombreDegradado{PolychromyArcoiris}
 \newcommand{\ActualizarDegradado}[1]{\renewcommand\NombreDegradado{#1}}
 
-%%%%	Contador: ContadorDegradado	%%%%
+%%%%	Contador: ContadorEfecto	%%%%
 
 % Permite identificar cada degradado en los comandos de Degradado, para aplicar los degradados de manera individual
 
-\newcounter{ContadorDegradado}
-\setcounter{ContadorDegradado}{0}
+\newcounter{ContadorEfecto}
+\setcounter{ContadorEfecto}{0}
 
 %%%%	\DegT	%%%%
 
 % Este comando aplica un degradado fijo respecto a la página en modo texto
 
-\newcommand{\DegT}[2][\NombreDegradado]{\vphantom{\begin{tikzfadingfrompicture}[name=Deg\theContadorDegradado]
+\newcommand{\DegT}[2][\NombreDegradado]{\vphantom{\begin{tikzfadingfrompicture}[name=Efecto\theContadorEfecto]
 			\node[text=transparent!0, inner sep=0, outer sep=0]{#2};
 	\end{tikzfadingfrompicture}}\begin{tikzpicture}
-		\node[inner sep=0, outer sep=0] (nodo\theContadorDegradado) {\phantom{#2}};
+		\node[inner sep=0, outer sep=0] (nodo\theContadorEfecto) {\phantom{#2}};
 		\node[
-		scope fading=Deg\theContadorDegradado,
+		scope fading=Efecto\theContadorEfecto,
 		fit fading=false, inner sep=0, outer sep=0
 		] at (0,0) {
 			\begin{tikzpicture}[remember picture, overlay]
@@ -44,7 +44,7 @@
 				] (box) at (current page.north){};
 			\end{tikzpicture}
 		};
-	\end{tikzpicture}\addtocounter{ContadorDegradado}{1}}
+	\end{tikzpicture}\addtocounter{ContadorEfecto}{1}}
 
 
 %%%%	\DegM	%%%%
@@ -59,7 +59,7 @@
 
 \newcommand{\DegM}[2][\NombreDegradado]{
 	\vphantom{
-		\begin{tikzfadingfrompicture}[name=Deg\theContadorDegradado]
+		\begin{tikzfadingfrompicture}[name=Efecto\theContadorEfecto]
 			\node[
 			text=transparent!0,
 			inner xsep=0pt,
@@ -82,9 +82,9 @@
 			inner xsep=0,
 			inner ysep=0pt,
 			outer sep=0
-			] (nodo\theContadorDegradado) {$\phantom{#2}$};
+			] (nodo\theContadorEfecto) {$\phantom{#2}$};
 			\node[
-			scope fading=Deg\theContadorDegradado,
+			scope fading=Efecto\theContadorEfecto,
 			fit fading=false,
 			inner xsep=0,
 			inner ysep=0,
@@ -103,7 +103,7 @@
 		},
 		watermark zoom=1,
 		watermark opacity=1
-		]{\phantom{#2}}}\addtocounter{ContadorDegradado}{1}
+		]{\phantom{#2}}}\addtocounter{ContadorEfecto}{1}
 }
 
 %%%%	\DegA	%%%%
@@ -123,9 +123,9 @@
 % Estos comandos aplican \displaystyle, \scriptstyle y \scriptscriptstyle.
 % Se recomienda su uso para ajustes específicos en el estilo de entornos matemáticos
 
-\newcommand{\DegD}[2][\NombreDegradado]{\DegradadoM[#1]{\displaystyle #2}}
-\newcommand{\DegS}[2][\NombreDegradado]{\DegradadoM[#1]{\scriptstyle #2}}
-\newcommand{\DegSS}[2][\NombreDegradado]{\DegradadoM[#1]{\scriptscriptstyle #2}}
+\newcommand{\DegD}[2][\NombreDegradado]{\DegM[#1]{\displaystyle #2}}
+\newcommand{\DegS}[2][\NombreDegradado]{\DegM[#1]{\scriptstyle #2}}
+\newcommand{\DegSS}[2][\NombreDegradado]{\DegM[#1]{\scriptscriptstyle #2}}
 
 %%%%	\DegD, \DegS, \DegSS	%%%%
 
@@ -171,3 +171,119 @@
 	color(75bp)=(PolychromyArcoiris17);
 	color(100bp)=(PolychromyArcoiris17)
 }
+
+
+%%%%	\DegT	%%%%
+
+% Este comando aplica un degradado fijo respecto a la página en modo texto
+
+\newcommand{\NombreImagen}{Imagen.pdf}
+\newcommand{\ActualizarImagen}[1]{\renewcommand{\NombreImagen}{#1}}
+
+\newcommand{\ImgT}[2][\NombreImagen]{\vphantom{\begin{tikzfadingfrompicture}[name=Efecto\theContadorEfecto]
+	\node[text=transparent!0, inner sep=0, outer sep=0]{#2};
+\end{tikzfadingfrompicture}}\begin{tikzpicture}
+\node[inner sep=0, outer sep=0] (nodo\theContadorEfecto) {\phantom{#2}};
+\node[
+scope fading=Efecto\theContadorEfecto,
+fit fading=false, inner sep=0, outer sep=0
+] at (0,0) {
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[
+		minimum width=\paperwidth, 
+		minimum height=\paperheight
+		] (box) at (current page.center){\includegraphics[width=\paperwidth, height=\paperheight]{#1}};
+	\end{tikzpicture}
+};
+\end{tikzpicture}\addtocounter{ContadorEfecto}{1}}
+
+
+%%%%	\DegM	%%%%
+
+% Es el comando que aplica degradado a entornos matemáticos.
+% Sin embargo, es recomendable utilizar los comandos que derivan de \DegM
+
+
+\newcommand{\ImgM}[2][\NombreImagen]{
+\vphantom{
+\begin{tikzfadingfrompicture}[name=Efecto\theContadorEfecto]
+	\node[
+	text=transparent!0,
+	inner xsep=0pt,
+	inner ysep=0.4pt,
+	outer sep=0mm]{$#2$};
+\end{tikzfadingfrompicture}
+}
+\raisebox{-0pt}{\tcboxmath[
+enhanced jigsaw,
+left*=0mm,
+right*=0mm,
+boxsep=0pt,
+top=0.4pt,
+bottom=0.4pt,
+arc=0mm,
+boxrule=0mm,
+opacityfill=0.0,
+watermark tikz={
+	\node[
+	inner xsep=0,
+	inner ysep=0pt,
+	outer sep=0
+	] (nodo\theContadorEfecto) {$\phantom{#2}$};
+	\node[
+	scope fading=Efecto\theContadorEfecto,
+	fit fading=false,
+	inner xsep=0,
+	inner ysep=0,
+	outer sep=0
+	] at (0,0) {
+		\begin{tikzpicture}[remember picture, overlay]
+			\node[
+			minimum width=\paperwidth, 
+			minimum height=\paperheight
+			] (box) at (current page.center){\includegraphics[width=\paperwidth, height=\paperheight]{#1}};
+		\end{tikzpicture}
+	};
+},
+watermark zoom=1,
+watermark opacity=1
+]{\phantom{#2}}}\addtocounter{ContadorEfecto}{1}
+}
+
+%%%%	\DegA	%%%%
+
+% Este comando aplica un estilo automático en entornos matemáticos, por lo que es el más recomendable
+
+\newcommand{\ImgA}[2][\NombreImagen]{
+\mathchoice
+{\ImgM[#1]{\textstyle #2}}
+{\ImgM[#1]{\displaystyle #2}}
+{\ImgM[#1]{\scriptstyle #2}}
+{\ImgM[#1]{\scriptscriptstyle #2}}
+}
+
+%%%%	\DegD, \DegS, \DegSS	%%%%
+
+% Estos comandos aplican \displaystyle, \scriptstyle y \scriptscriptstyle.
+% Se recomienda su uso para ajustes específicos en el estilo de entornos matemáticos
+
+\newcommand{\ImgD}[2][\NombreImagen]{\ImgM[#1]{\displaystyle #2}}
+\newcommand{\ImgS}[2][\NombreImagen]{\ImgM[#1]{\scriptstyle #2}}
+\newcommand{\ImgSS}[2][\NombreImagen]{\ImgM[#1]{\scriptscriptstyle #2}}
+
+\usepackage{xparse}
+
+\ExplSyntaxOn
+\seq_new:N \l_polychromy_seq
+\NewDocumentCommand{\PolyDegT}{m}
+  {
+    \seq_set_split:Nnn \l_polychromy_seq {~} {#1}
+    \seq_map_inline:Nn \l_polychromy_seq { \DegT{##1}\space }
+  }
+  
+\NewDocumentCommand{\PolyImgT}{m}
+  {
+    \seq_set_split:Nnn \l_polychromy_seq {~} {#1}
+    \seq_map_inline:Nn \l_polychromy_seq { \ImgAltT{##1}\space }
+  }
+\ExplSyntaxOff
